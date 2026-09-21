@@ -12,6 +12,9 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+// middleware to allow using files in the wwwwroot-folder
+app.MapStaticAssets();
+
 // map default controller route - standard URL pattern (also adds middleware - handles routing of incoming requests to appropriate controller)
 app.MapDefaultControllerRoute();
 

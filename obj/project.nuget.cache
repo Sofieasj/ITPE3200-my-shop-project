@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "6pX+z26N5mQ=",
+  "dgSpecHash": "wZie30L8tc4=",
   "success": true,
   "projectFilePath": "C:\\Users\\sasje\\OneDrive\\Documents\\Anvendt data\\5 semester\\ITPE3200\\MyShop\\MyShop.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\sasje\\.nuget\\packages\\microsoft.web.librarymanager.build\\3.0.114\\microsoft.web.librarymanager.build.3.0.114.nupkg.sha512"
+  ],
   "logs": []
 }
