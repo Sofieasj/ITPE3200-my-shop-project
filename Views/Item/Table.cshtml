@@ -1,4 +1,4 @@
-@model ItemsViewModel
+@model ItemsViewModel // tells razor what type of object to expect
 
 <!-- razor (ASP.NET based) - embed server side code in view. Dynamic object, passes data Controller-> View -->
 <h1>List of Shop Items (@Model.CurrentViewName View)</h1>
@@ -20,7 +20,11 @@
             {
                 <tr>
                     <td>@item.ItemId</td>
-                    <td>@item.Name</td>
+                    <td>
+                        <a asp-controller="Item" 
+                            asp-action="Details" 
+                            asp-route-id="@item.ItemId">@item.Name</a>
+                    </td>
                     <td>@item.Price.ToString("0.00 NOK")</td>
                     <td>@item.Description</td>
                     <td></td>

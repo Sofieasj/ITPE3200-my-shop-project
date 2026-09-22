@@ -9,20 +9,34 @@ public class ItemController : Controller
     // each action typically corresponding to a user interaction - e.g. view list, displau item detail, submit form
     // usually returns an IActionResult - View/JSON/rediret or other
 
+    // VIEWMODEL - strongly typed, autocomplete support, easier to scale and maintain
+    // Table-view-controller
     public IActionResult Table()
     {
-        var items = GetItems();
-        var itemsViewModel = new ItemsViewModel(items, "Table");
+        var items = GetItems(); // input all the items
+        var itemsViewModel = new ItemsViewModel(items, "Table"); // create object
         return View(itemsViewModel);
     }
 
+    // Grid-view-controller
     public IActionResult Grid()
     {
         var items = GetItems();
         var itemsViewModel = new ItemsViewModel(items, "Grid");
         return View(itemsViewModel);
     }
+
+    // Details-view-controller
+    public IActionResult Details(int id)
+    {
+        var items = GetItems();
+        var item = items.FirstOrDefault(i => i.ItemId == id); // for each i, check if i.ItemId == id (parameter)
+        if (item == null)
+            return NotFound();
+        return View(item);
+    }
    
+   // VIEWBAG - loosely typed, less support and messy to work with on big projects
     // public IActionResult Table ()
     // {
 

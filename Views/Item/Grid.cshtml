@@ -15,8 +15,12 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="text-start">
-                            @item.Name
-                            </h5>
+                            <!-- controller - links to controller, action method details, 
+                            id route parameter. Linked with app.MapDefaultControllerRoute() -->
+                            <a asp-controller="Item" 
+                            asp-action="Details" 
+                            asp-route-id="@item.ItemId">@item.Name</a>
+                        </h5>
                         <h5 class="text-nowrap">
                             @item.Price.ToString("0.00 NOK")
                             </h5>
