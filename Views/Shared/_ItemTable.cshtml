@@ -1,0 +1,31 @@
+@model IEnumerable<Item>
+
+<div class="container">
+    <table class='table table-striped'>
+        <thead> <!-- i've added thead and more for more semantic html -->
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- razor loop. Creates a new row for each item in the Model -->
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ItemId</td>
+                    <td>
+                        <a asp-controller="Item" 
+                            asp-action="Details" 
+                            asp-route-id="@item.ItemId">@item.Name</a>
+                    </td>
+                    <td>@item.Price.ToString("0.00 NOK")</td>
+                    <td>@item.Description</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
