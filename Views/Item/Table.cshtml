@@ -1,31 +1,31 @@
-@using MyShop.Models
-@model IEnumerable<MyShop.Models.Item> // model binding
-    
-<!-- .cshtml due to using razor (dotnet) -->
+@model ItemsViewModel
 
-    <section class="container">
-        <!-- razor (ASP.NET based) - embed server side code in view. Dynamic object, passes data Controller-> View -->
-        <h1>@ViewBag.CurrentViewName</h1>
-        <table class='table table-striped'>
-            <thead> <!-- i've added thead and more for more semantic html -->
+<!-- razor (ASP.NET based) - embed server side code in view. Dynamic object, passes data Controller-> View -->
+<h1>List of Shop Items (@Model.CurrentViewName View)</h1>
+<a href="/Item/Grid">Grid View</a>
+
+<div class="container">
+    <table class='table table-striped'>
+        <thead> <!-- i've added thead and more for more semantic html -->
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- razor loop. Creates a new row for each item in the Model -->
+            @foreach (var item in Model.Items)
+            {
                 <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Description</th>
+                    <td>@item.ItemId</td>
+                    <td>@item.Name</td>
+                    <td>@item.Price.ToString("0.00 NOK")</td>
+                    <td>@item.Description</td>
+                    <td></td>
                 </tr>
-            </thead>
-            <tbody>
-                <!-- razor loop. Creates a new row for each item in the Model -->
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.ItemId</td>
-                        <td>@item.Name</td>
-                        <td>@item.Price.ToString("0.00 NOK")</td>
-                        <td></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </section>
+            }
+        </tbody>
+    </table>
+</div>
