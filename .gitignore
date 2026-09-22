@@ -1,1 +1,4 @@
 **/wwwroot/lib/
+**/ItemDatabase.db
+**/ItemDatabase.db-shm
+**/ItemDatabase.db-wal

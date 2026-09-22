@@ -1,8 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using MyShop.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // services (ASP.NET components) for handling controllers and views to dependency injection container 
 // sets up the MVC pattern for handling HTTP requests
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<ItemDbContext>(options =>
+{
+    options.UseSqlite(
+        builder.Configuration["ConnectionStrings:ItemDbContextConnection"]
+    );
+});
 
 var app = builder.Build();
 
