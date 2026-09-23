@@ -22,7 +22,7 @@
         <dd class="col-sm-10">@Model.ImageUrl</dd>
     </dl>
 
-    <form asp-action="DeletConfrimed" asp-route-id="@Model.ItemId" method="post">
+    <form asp-action="DeleteConfirmed" asp-route-id="@Model.ItemId" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
         <button type="submit" class="btn btn-secondary">Cancel</button>
     </form>
