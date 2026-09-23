@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyShop.Models; // connects to Model-namespace to retrieve data models
 using MyShop.ViewModels; // connets to ViewModels-namespace - if a type name is used that can't be resolved locally, check here
+
 namespace MyShop.Controllers;
 
 public class ItemController : Controller 
@@ -40,6 +41,24 @@ public class ItemController : Controller
         var item = items.FirstOrDefault(i => i.ItemId == id); // for each i, check if i.ItemId == id (parameter)
         if (item == null)
             return NotFound();
+        return View(item);
+    }
+
+    [HttpGet] // GET to display the form (in create view) to create a new item
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost] // POST to handle the creation form submission
+    public IActionResult Create(Item item) // creates a new Item object
+    {
+        if (ModelState.IsValid) // checks if form data passed validation
+        {
+            _itemDbContext.Items.Add(item); // add item
+            _itemDbContext.SaveChanges(); // update/save in db
+            return RedirectToAction(nameof(Table)); // redirect to table to show all items
+        }
         return View(item);
     }
 }
