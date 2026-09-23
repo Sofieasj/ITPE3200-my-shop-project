@@ -61,4 +61,51 @@ public class ItemController : Controller
         }
         return View(item);
     }
+
+    [HttpGet] // display update form
+    public IActionResult Update(int id)
+    {
+        var item = _itemDbContext.Items.Find(id);
+        if (item == null)
+        {
+            return NotFound();
+        }
+        return View(item);
+    }
+
+    [HttpPost] // update the item in db
+    public IActionResult Update(Item item)
+    {
+        if (ModelState.IsValid)
+        {
+            _itemDbContext.Items.Update(item);
+            _itemDbContext.SaveChanges();
+            return RedirectToAction(nameof(Table));
+        }
+        return View(item);
+    }
+
+    [HttpGet] // view deletion-form
+    public IActionResult Delete(int id)
+    {
+        var item = _itemDbContext.Items.Find(id);
+        if (item == null)
+        {
+            return NotFound();
+        }
+        return View(item);
+    }
+
+    [HttpPost] // delete item for db
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var item = _itemDbContext.Items.Find(id);
+        if (item == null)
+        {
+            return NotFound();
+        }
+        _itemDbContext.Items.Remove(item);
+        _itemDbContext.SaveChanges();
+        return RedirectToAction(nameof(Table));
+    }
 }

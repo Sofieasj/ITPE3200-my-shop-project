@@ -1,4 +1,5 @@
-using System; // namespace - provides basic classes and base classes
+using System.ComponentModel.DataAnnotations; // namespace - provides basic classes and base classes
+
 // namespaces are used to organize code in hierarchical structure
 namespace MyShop.Models // signifies code belonging to Models-folder or component within MyShop-application
 {

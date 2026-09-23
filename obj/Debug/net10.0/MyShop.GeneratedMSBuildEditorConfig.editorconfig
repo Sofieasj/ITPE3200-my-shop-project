@@ -31,6 +31,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/sasje/OneDrive/Documents/Anvendt data/5 semester/ITPE3200/MyShop/Views/Item/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/sasje/OneDrive/Documents/Anvendt data/5 semester/ITPE3200/MyShop/Views/Item/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -41,6 +45,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/sasje/OneDrive/Documents/Anvendt data/5 semester/ITPE3200/MyShop/Views/Item/Table.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sasje/OneDrive/Documents/Anvendt data/5 semester/ITPE3200/MyShop/Views/Item/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/sasje/OneDrive/Documents/Anvendt data/5 semester/ITPE3200/MyShop/Views/Shared/_Carousel.cshtml]
