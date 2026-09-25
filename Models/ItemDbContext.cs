@@ -19,4 +19,10 @@ public class ItemDbContext : DbContext // defines inheritance from DbContext (re
     public DbSet<Customer> Customers {get; set; }
     public DbSet<Order> Orders {get; set; }
     public DbSet<OrderItem> OrderItems {get; set; }
+
+    // enables lazy loading (nb be careful with it in performance-critical scenarios)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseLazyLoadingProxies();
+    }
 }

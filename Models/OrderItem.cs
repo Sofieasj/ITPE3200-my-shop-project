@@ -9,6 +9,6 @@ public class OrderItem
     public int Quantity {get; set; }
     public int OrderId {get; set; }
     // navigation property
-    public Order Order {get; set; } = default!;
+    public virtual Order Order {get; set; } = default!;
     public decimal OrderItemPrice {get; set; }
 }
