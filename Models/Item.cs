@@ -16,5 +16,7 @@ namespace MyShop.Models // signifies code belonging to Models-folder or componen
         // ? means nullable as in optional - can hold string or null
         public string? Description {get; set; }
         public string? ImageUrl {get; set; }
+        // navigation property - represents relationship between entities
+        public List<OrderItem>? OrderItems {get; set; }
     }
 }
