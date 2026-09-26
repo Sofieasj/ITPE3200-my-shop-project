@@ -1,0 +1,30 @@
+@model IEnumerable<Customer>
+
+<div class="container">
+    <table>
+        <thead>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Orders</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model) {
+                <tr>
+                    <td>@customer.CustomerId</td>
+                    <td>@customer.Name</td>
+                    <td>@customer.Address</td>
+                    <td>
+                        @if (@customer.Orders != null)
+                        {
+                            <p>@string.Join(", ", @customer.Orders.Select(order => $"Orders{order.OrderId}"))</p>
+                        }
+                    </td>
+                    <td></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
