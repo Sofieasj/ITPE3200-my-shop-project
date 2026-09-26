@@ -5,7 +5,7 @@ public class OrderItem
     public int OrderItemId {get; set; }
     public int ItemId {get; set; }
     //navigation property
-    public Item Item {get; set; } = default!;
+    public virtual Item Item {get; set; } = default!;
     public int Quantity {get; set; }
     public int OrderId {get; set; }
     // navigation property

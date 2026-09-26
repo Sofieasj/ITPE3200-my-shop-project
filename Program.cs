@@ -20,6 +20,7 @@ if (app.Environment.IsDevelopment())
 {
     // dev env error page for unhandled exceptions - provides detailed info for debugging
     app.UseDeveloperExceptionPage();
+    DBInit.Seed(app);
 }
 
 // middleware to allow using files in the wwwwroot-folder
