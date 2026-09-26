@@ -2,8 +2,9 @@
 // but for this project all entities are managed from here
 
 using Microsoft.EntityFrameworkCore; // functionality for db operations
+using MyShop.Models;
 
-namespace MyShop.Models;
+namespace MyShop.DAL;
 
 public class ItemDbContext : DbContext // defines inheritance from DbContext (represents a session with the db)
 {

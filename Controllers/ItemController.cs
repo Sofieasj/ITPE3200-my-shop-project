@@ -1,17 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyShop.Models; // connects to Model-namespace to retrieve data models
+using MyShop.DAL;
 using MyShop.ViewModels; // connets to ViewModels-namespace - if a type name is used that can't be resolved locally, check here
 
 namespace MyShop.Controllers;
 
 public class ItemController : Controller
 {
-    private readonly ItemDbContext _itemDbContext;
+    private readonly IItemRepository _itemRepository;
 
-    public ItemController(ItemDbContext itemDbContext) // constructor - dependency injection
+    public ItemController(IItemRepository itemRepository) // constructor - dependency injection
     {
-        _itemDbContext = itemDbContext;
+        _itemRepository = itemRepository;
     }
 
     // actions are Controller methods handling specific requests. 
@@ -20,7 +21,7 @@ public class ItemController : Controller
 
     public async Task<IActionResult> Table() // Table-view-controller
     {
-        List<Item> items = await _itemDbContext.Items.ToListAsync(); // converts db records to list
+        var items = await _itemRepository.GetAll(); // converts db records to list
         var itemsViewModel = new ItemsViewModel(items, "Table"); // create object
         // VIEWMODEL - strongly typed, autocomplete support, easier to scale and maintain
         return View(itemsViewModel);
@@ -29,7 +30,7 @@ public class ItemController : Controller
     // Grid-view-controller - async/await to ensure the system does not pause during wait
     public async Task<IActionResult> Grid()
     {
-        List<Item> items = await _itemDbContext.Items.ToListAsync();
+        var items = await _itemRepository.GetAll();
         var itemsViewModel = new ItemsViewModel(items, "Grid");
         return View(itemsViewModel);
     }
@@ -37,10 +38,9 @@ public class ItemController : Controller
     // Show item details-view
     public async Task<IActionResult> Details(int id)
     {
-        List<Item> items = await _itemDbContext.Items.ToListAsync();
-        var item = items.FirstOrDefault(i => i.ItemId == id); // for each i, check if i.ItemId == id (parameter)
+        var item = await _itemRepository.GetItemById(id);
         if (item == null)
-            return NotFound();
+            return BadRequest("Item not found.");
         return View(item);
     }
 
@@ -55,8 +55,7 @@ public class ItemController : Controller
     {
         if (ModelState.IsValid) // checks if form data passed validation
         {
-            _itemDbContext.Items.Add(item); // add item
-            await _itemDbContext.SaveChangesAsync(); // update/save in db
+            await _itemRepository.Create(item); // update/save in db
             return RedirectToAction(nameof(Table)); // redirect to table to show all items
         }
         return View(item);
@@ -65,7 +64,7 @@ public class ItemController : Controller
     [HttpGet] // display update form
     public async Task<IActionResult> Update(int id)
     {
-        var item = await _itemDbContext.Items.FindAsync(id);
+        var item = await _itemRepository.GetItemById(id);
         if (item == null)
         {
             return NotFound();
@@ -78,8 +77,7 @@ public class ItemController : Controller
     {
         if (ModelState.IsValid)
         {
-            _itemDbContext.Items.Update(item);
-            await _itemDbContext.SaveChangesAsync();
+            await _itemRepository.Update(item);
             return RedirectToAction(nameof(Table));
         }
         return View(item);
@@ -88,7 +86,7 @@ public class ItemController : Controller
     [HttpGet] // view deletion-form
     public async Task<IActionResult> Delete(int id)
     {
-        var item = await _itemDbContext.Items.FindAsync(id);
+        var item = await _itemRepository.GetItemById(id);
         if (item == null)
         {
             return NotFound();
@@ -99,13 +97,7 @@ public class ItemController : Controller
     [HttpPost] // delete item for db
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var item = await _itemDbContext.Items.FindAsync(id);
-        if (item == null)
-        {
-            return NotFound();
-        }
-        _itemDbContext.Items.Remove(item);
-        await _itemDbContext.SaveChangesAsync();
+        await _itemRepository.Delete(id);
         return RedirectToAction(nameof(Table));
     }
 }

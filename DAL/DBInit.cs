@@ -1,7 +1,8 @@
 using System.ComponentModel.Design.Serialization;
 using Microsoft.EntityFrameworkCore;
+using MyShop.Models;
 
-namespace MyShop.Models;
+namespace MyShop.DAL;
 
 public static class DBInit
 {
