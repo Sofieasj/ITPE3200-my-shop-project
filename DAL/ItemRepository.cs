@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MyShop.DAL;
 using MyShop.Models;
 
-namespace MyShope.DAL;
+namespace MyShop.DAL;
 
 public class ItemRepository : IItemRepository
 {

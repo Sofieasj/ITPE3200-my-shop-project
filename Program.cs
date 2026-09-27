@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MyShop.Models;
+using MyShop.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +14,8 @@ builder.Services.AddDbContext<ItemDbContext>(options =>
     );
 });
 
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -24,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // middleware to allow using files in the wwwwroot-folder
-app.MapStaticAssets();
+app.UseStaticFiles();
 
 // map default controller route - standard URL pattern (also adds middleware - handles routing of incoming requests to appropriate controller)
 app.MapDefaultControllerRoute();
