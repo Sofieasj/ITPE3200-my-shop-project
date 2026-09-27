@@ -9,24 +9,27 @@ namespace MyShop.Controllers;
 
 public class OrderController : Controller
 {
-    private readonly ItemDbContext _itemDbContext;
+    // dependency injection of BOTH orders and items - orders consist of items
+    private readonly IOrderRepository _orderRepository;
+    private readonly IItemRepository _itemRepository;
 
-    public OrderController(ItemDbContext itemDbContext)
+    public OrderController(IOrderRepository orderRepository, IItemRepository itemRepository)
     {
-        _itemDbContext = itemDbContext;
+        _orderRepository = orderRepository;
+        _itemRepository = itemRepository;
     }
 
     public async Task<IActionResult> Table()
     {
-        List<Order> orders = await _itemDbContext.Orders.ToListAsync();
+        var orders = await _orderRepository.GetAll();
         return View(orders);
     }
 
     [HttpGet]
     public async Task<IActionResult> CreateOrderItem()
     {
-        var items = await _itemDbContext.Items.ToListAsync();
-        var orders = await _itemDbContext.Orders.ToListAsync();
+        var items = await _itemRepository.GetAll();
+        var orders = await _orderRepository.GetAll();
         var createOrderItemViewModel = new CreateOrderItemViewModel
         {
             OrderItem = new OrderItem(),
@@ -51,8 +54,8 @@ public class OrderController : Controller
     {
         try
         {
-            var newItem = _itemDbContext.Items.Find(orderItem.ItemId);
-            var newOrder = _itemDbContext.Orders.Find(orderItem.OrderId);
+            var newItem = await _itemRepository.GetItemById(orderItem.ItemId);
+            var newOrder = await _orderRepository.GetOrderById(orderItem.OrderId);
 
             if (newItem == null || newOrder == null)
             {
@@ -69,8 +72,9 @@ public class OrderController : Controller
             };
             newOrderItem.OrderItemPrice = orderItem.Quantity * newOrderItem.Item.Price;
 
-            _itemDbContext.OrderItems.Add(newOrderItem);
-            await _itemDbContext.SaveChangesAsync();
+            newOrder.OrderItems ??= new List<OrderItem>();
+            newOrder.OrderItems.Add(newOrderItem);
+            await _orderRepository.Create(newOrder);
             return RedirectToAction(nameof(Table));
         }
         catch

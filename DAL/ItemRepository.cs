@@ -41,8 +41,9 @@ public class ItemRepository : IItemRepository
         return await _db.Items.FindAsync(id);
     }
 
-    public Task Update(Item item)
+    public async Task Update(Item item)
     {
-        throw new NotImplementedException();
+        _db.Items.Update(item);
+        await _db.SaveChangesAsync();    
     }
 }
