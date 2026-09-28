@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using MyShop.DAL;
+using Serilog;
+using Serilog.Events;
+using SQLitePCL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +18,29 @@ builder.Services.AddDbContext<ItemDbContext>(options =>
     );
 });
 
+// DAL
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+// logger
+builder.Services.AddSerilog((services, loggerConfiguration) =>
+{
+    loggerConfiguration
+    .MinimumLevel.Information()
+    //.WriteTo.Console()
+    .WriteTo.File($"Logs/app_{DateTime.Now:yyyyMMdd_HHmmss}.log")
+    // Filtering out info-level EF db execution logs
+    .Filter.ByExcluding(e => e.Properties.TryGetValue("SourceContext", out var value) && 
+                e.Level == LogEventLevel.Information && 
+                e.MessageTemplate.Text.Contains("Executed DbCommend"));
+});
+
+/* Adjusting lifetime of services
+builder.Services.AddScoped<IService,Service>();
+builder.Services.AddTransient<IService,Service>();
+builder.Services.AddSingleton<IService,Service>();
+*/
 
 var app = builder.Build();
 

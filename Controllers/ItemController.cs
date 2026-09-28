@@ -9,18 +9,23 @@ namespace MyShop.Controllers;
 public class ItemController : Controller
 {
     private readonly IItemRepository _itemRepository;
+    readonly ILogger<ItemController> _logger;
 
-    public ItemController(IItemRepository itemRepository) // constructor - dependency injection
+    public ItemController(IItemRepository itemRepository, ILogger<ItemController> logger) // constructor - dependency injection
     {
         _itemRepository = itemRepository;
+        _logger = logger;
     }
 
     // actions are Controller methods handling specific requests. 
     // each action typically corresponding to a user interaction - e.g. view list, display item details, submit form
     // usually returns an IActionResult - View/JSON/rediret or other
 
-    public async Task<IActionResult> Table() // Table-view-controller
+    public async Task<IActionResult> Table() // Table-view-controller m/logging
     {
+        _logger.LogInformation("This is an information message");
+        _logger.LogWarning("This is a warning message");
+        _logger.LogError("This is an error message");
         var items = await _itemRepository.GetAll(); // converts db records to list
         var itemsViewModel = new ItemsViewModel(items, "Table"); // create object
         // VIEWMODEL - strongly typed, autocomplete support, easier to scale and maintain

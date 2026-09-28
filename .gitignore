@@ -1,4 +1,12 @@
+bin/
+obj/
+
+# Logs (Program.cs writes to Logs/)
+Logs/
+
 **/wwwroot/lib/
+
+# Database-files (original)
 **/ItemDatabase.db
 **/ItemDatabase.db-shm
 **/ItemDatabase.db-wal
